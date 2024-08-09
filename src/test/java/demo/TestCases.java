@@ -20,7 +20,9 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 
 
@@ -98,25 +100,38 @@ public class TestCases {
        // action.build().perform();
         //WebElement searchIcon = driver.findElement(By.xpath("//button[@aria-label='Search for Products, Brands and More']"));
         //Wrappers.click(searchIcon);
+        String mobilePriceAndDiscount;
+        Set<String> iPhoneswithDiscount = new HashSet();
         List<WebElement> titles = driver.findElements(By.xpath("//div[@class='KzDlHZ']"));
         List<WebElement> discounts = driver.findElements(By.xpath("//div[@class='UkUFwK']"));
        
         for(WebElement title : titles)
         {
-            if(title.getText().contains("iphone"))
+            //System.out.println("Titles of ALL phones are : " + title.getText());
+            //String mobileTitle = title.getText()
+            if(title.getText().contains("iPhone"))
             {
+               // System.out.println("Titles of iphones are : " + title.getText());
+                
                 for(WebElement discount : discounts)
                 {
                     String d = discount.getText();
                     String newD = d.substring(0, 2);
                     int dis = Integer.parseInt(newD);
                     if(dis > 17)
+                    
                     {
-                        System.out.println("The Title and Price of iphone is : " + title.getText() +" "+ dis+"%");
+                        mobilePriceAndDiscount = title.getText() +" "+ dis+"%";
+                        iPhoneswithDiscount.add(mobilePriceAndDiscount);
                     }
                 }
             }
         }
+        for(String iphoneUnique : iPhoneswithDiscount)
+        {
+            System.out.println(iphoneUnique);
+        }
+        
 
     }
 // Class to hold Product details (Title, Image URL, Reviews)
